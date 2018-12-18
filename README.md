@@ -44,3 +44,6 @@ cd $THIS_PROJECT
 pipenv install
 pipenv shell # activate venv
 pytest -x # should run testcases in $THIS_PROJECT/tests
+
+# more docs
+Please view more at [doc/](doc)

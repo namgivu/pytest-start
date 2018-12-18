@@ -104,9 +104,8 @@ venv.bak/
 .mypy_cache/
 
 # THIS PROJECT 's stuff
-.idea/inspectionProfiles/
+.idea/dictionaries/
 .idea/misc.xml
 .idea/modules.xml
 .idea/pytest-start.iml
-.idea/vcs.xml
 .idea/workspace.xml

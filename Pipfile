@@ -6,7 +6,8 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-pytest = "*"
+pytest     = "*"
+sqlalchemy = "*"
 
 [requires]
 python_version = "3.6"

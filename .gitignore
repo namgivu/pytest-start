@@ -109,3 +109,5 @@ venv.bak/
 .idea/modules.xml
 .idea/pytest-start.iml
 .idea/workspace.xml
+.idea/deployment.xml
+.idea/other.xml

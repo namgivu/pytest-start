@@ -6,8 +6,12 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-pytest     = "*"
+pytest = "*"
+
 sqlalchemy = "*"
+psycopg2 = "*"
+
+pytest-xdist = "*"
 
 [requires]
 python_version = "3.6"

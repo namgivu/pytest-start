@@ -1,5 +1,7 @@
 from sqlalchemy     import create_engine
 from sqlalchemy.orm import sessionmaker
+from contextlib     import contextmanager
+
 
 #region connection as session
 port = '54322'
@@ -15,8 +17,7 @@ Session = sessionmaker(bind=engine)
 #endregion
 
 
-class DbSvc: # DbSvc aka. Datbase Service
-    from contextlib import contextmanager
+class PostgresSvc: # aka. Postgres Service
 
     @classmethod
     @contextmanager # this helps to get around the error 'AttributeError: __exit__' #TODO why is that?

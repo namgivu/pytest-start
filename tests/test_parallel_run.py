@@ -1,12 +1,11 @@
 import time
 import unittest
-import service.testing
 
 def setUpModule():    pass # nothing here for now
 def tearDownModule(): pass # nothing here for now
 
 
-class TestOwnDb(unittest.TestCase):
+class TestParallelRun(unittest.TestCase):
 
     def setUp(self):    pass # nothing here for now
     def tearDown(self): pass # nothing here for now

@@ -8,10 +8,12 @@ verify_ssl = true
 [packages]
 pytest = "*"
 
-sqlalchemy = "*"
-psycopg2 = "*"
+sqlalchemy       = "*"
+sqlalchemy-utils = "*"
+psycopg2         = "*"
 
 pytest-xdist = "*"
+
 
 [requires]
 python_version = "3.6"

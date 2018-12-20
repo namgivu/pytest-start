@@ -1,8 +1,11 @@
 import datetime
-from ._imports_ import *
+
+from ._imports_       import *
+from model._base_     import BaseModel
+from service.postgres import PostgresSvc
 
 
-class User(DeclarativeBase):
+class User(DeclarativeBase, BaseModel):
     __tablename__ = 'users'
 
     id         = Column(Integer, primary_key=True, autoincrement=True)
@@ -19,3 +22,9 @@ class User(DeclarativeBase):
     --> Simply that JSONB cannot record updates while MutableDict.as_mutable(JSONB) can
     '''
     #endregion
+
+
+    @staticmethod
+    def create(fields:dict):
+        u = User(**fields)
+        return PostgresSvc.insert(u)

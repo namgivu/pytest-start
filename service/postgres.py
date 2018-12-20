@@ -72,6 +72,7 @@ class PostgresSvc: # aka. Postgres Service
         DeclarativeBase.metadata.create_all(engine)
 
 
+    #region db crud
     @classmethod
     def create_db(cls, db_name):
         from sqlalchemy import create_engine
@@ -80,9 +81,20 @@ class PostgresSvc: # aka. Postgres Service
         eg = create_engine(f'postgresql://{user}:{pswd}@{host}:{port}/{db_name}') # eg aka. engine
         if not database_exists(eg.url): create_database(eg.url) # ref. https://stackoverflow.com/a/30971098/248616
 
+
+    @classmethod
+    def drop_db(cls, db_name):
+        from sqlalchemy import create_engine
+        from sqlalchemy_utils import database_exists, drop_database
+
+        eg = create_engine(f'postgresql://{user}:{pswd}@{host}:{port}/{db_name}') # eg aka. engine
+        if database_exists(eg.url): drop_database(eg.url) # ref. https://stackoverflow.com/a/30971098/248616
+
+
     @classmethod
     def drop_all_postgres_tables(cls):
         from model._base_ import DeclarativeBase
         tables = ','.join(table.name for table in reversed(DeclarativeBase.metadata.sorted_tables))
         with PostgresSvc.get_session() as session:
             session.execute(f'DROP TABLE if exists {tables} CASCADE;')
+    #endregion db crud

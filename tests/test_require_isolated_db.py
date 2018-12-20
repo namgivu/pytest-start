@@ -1,5 +1,6 @@
 import unittest
 
+from service import testing
 from service.postgres import PostgresSvc
 from model.user       import User
 

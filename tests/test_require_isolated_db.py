@@ -9,6 +9,11 @@ def tearDownModule(): pass # nothing here for now
 
 
 class TestRequireIsolatedDb(unittest.TestCase):
+    """
+    CAUTION
+    This test class works only when running it non-parallel
+    pytest -x  # no -n option here
+    """
 
     def setUp(self):
         PostgresSvc.create_db(db_name='test')
@@ -28,6 +33,15 @@ class TestRequireIsolatedDb(unittest.TestCase):
 
     def test_require_isolated_db2(self):
         """
-        here, we create :user with 1 row
+        here, we create :user with some row(s)
         """
-        pass #TODO
+
+        # create fixture
+        u1 = User.create(dict(email='some@e.mail1'))
+        u2 = User.create(dict(email='some@e.mail2'))
+        PostgresSvc.insert(u1)
+        PostgresSvc.insert(u2)
+
+        # check rows count
+        u_all = User.find_all()
+        assert len(u_all) == 2

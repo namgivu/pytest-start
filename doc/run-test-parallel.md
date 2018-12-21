@@ -25,5 +25,5 @@ pytest -x
 
 misc commands log
 ```bash
-pytest -x -n 3 --durations=0  --disable-pytest-warning  
+pytest -x -n 4 --durations=0  --disable-pytest-warning # best speed to run total of 04 test methods #TODO should it be -n $number_of_test_methods?  
 ```

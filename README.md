@@ -40,10 +40,15 @@ pipenv --version
 ```
 
 # install requirements.txt
+```bash
 cd $THIS_PROJECT
 pipenv install
 pipenv shell # activate venv
+
+prj=`pwd` # put here /path/to/your/project/folder
+export PYTHONPATH="$prj:$PYTHONPATH"
 pytest -x # should run testcases in $THIS_PROJECT/tests
+```
 
 # more docs
 Please view more at [doc/](doc)

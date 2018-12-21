@@ -40,6 +40,7 @@ class PostgresSvc: # aka. Postgres Service
 
         if Session2: session = Session2(expire_on_commit=False) # load :Session2 as test's :require_isolated_db session
         else:        session = Session(expire_on_commit=False)  # load :Session as common :test db
+
         try:
             yield session
             session.commit()

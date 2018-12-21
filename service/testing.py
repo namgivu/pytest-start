@@ -37,7 +37,7 @@ def isolate_db(wrapped_f): # wrapped_f aka. wrapped function # creating python d
         self         = args[0]
         test_id      = tid(self)
         _, engine, _ = require_isolated_db(test_id)
-        db_name      = md5(test_id)
+        db_name      = md5(test_id) # we hash to make a short db name since postgres has limited db name length
 
         PostgresSvc.create_db(db_name)
         PostgresSvc.create_all_postgres_tables(engine)

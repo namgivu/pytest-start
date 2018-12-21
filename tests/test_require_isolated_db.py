@@ -12,7 +12,7 @@ def tearDownModule(): pass # nothing here for now
 class TestRequireIsolatedDb(unittest.TestCase):
     """
     CAUTION
-    This test class works only when running it non-parallel
+    This test class works only when running it NON-PARALLEL
     pytest -x  # no -n option here
     """
 

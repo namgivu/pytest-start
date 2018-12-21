@@ -27,24 +27,21 @@ class TestRequireIsolatedDbParallel(unittest.TestCase):
         _, engine, _ = testing.require_isolated_db(self.test_id)
         PostgresSvc.create_db(db_name=md5(self.test_id))
         PostgresSvc.create_all_postgres_tables(engine)
+        self.addCleanup(PostgresSvc.drop_db, db_name=md5(self.test_id)) #TODO can we have code to queue this to execute when test ends?
 
-        #region main test
+        # main test
         u_all = User.find_all()
         assert len(u_all) == 0
-        #endregion
-
-        # tear down
-        PostgresSvc.drop_db(db_name=self.test_id) #TODO can we have code to queue this to execute when test ends?
 
 
     def test_require_isolated_db2(self):
-        # set up
+        # set up & tear down
         #TODO create decorator to do the below block
         _, engine, _ = testing.require_isolated_db(self.test_id)
         PostgresSvc.create_db(db_name=md5(self.test_id))
         PostgresSvc.create_all_postgres_tables(engine)
+        self.addCleanup(PostgresSvc.drop_db, db_name=md5(self.test_id)) #TODO can we have code to queue this to execute when test ends?
 
-        #region main test
         # create fixture
         u1 = User.create(dict(email='some@e.mail1'))
         u2 = User.create(dict(email='some@e.mail2'))
@@ -54,7 +51,3 @@ class TestRequireIsolatedDbParallel(unittest.TestCase):
         # check rows count
         u_all = User.find_all()
         assert len(u_all) == 2
-        #endregion
-
-        # tear down
-        PostgresSvc.drop_db(db_name=md5(self.test_id)) #TODO can we have code to queue this to execute when test ends?

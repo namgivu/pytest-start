@@ -7,10 +7,15 @@ export PYTHONPATH="$prj:$PYTHONPATH"
 ```
 
 run parallel with 02 cpu
-TODO how to detect optimized number of cpu?
 ```bash
+#run with pytest-xdist
        #stop if error  #cpu number  #show elapsed  #verbose elapsed  #turn off warning         
 pytest -x              -n 2         --durations=0  -vv               --disable-pytest-warning  
+pytest -x              -n 2         --durations=0                    --disable-pytest-warning  
+
+#run with pytest-parallel
+       #stop if error  #worker number  #test per worker         #show elapsed  #verbose elapsed  #turn off warning         
+pytest -x              --workers 2     --tests-per-worker 2     #--durations=0  -vv               --disable-pytest-warning  
 ```
 
 normally test run with no parallel
@@ -18,7 +23,7 @@ normally test run with no parallel
 pytest -x
 ```
 
-run log
+misc commands log
 ```bash
 pytest -x -n 3 --durations=0  --disable-pytest-warning  
 ```

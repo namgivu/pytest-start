@@ -1,41 +1,60 @@
+import unittest
+
 from service          import testing
+from service.hash     import md5
 from service.postgres import PostgresSvc
-from tests.test_require_isolated_db import TestRequireIsolatedDb
+from model.user       import User
 
 
 def setUpModule():    pass # nothing here for now
 def tearDownModule(): pass # nothing here for now
 
 
-def set_up(test_id):
-    pass
-
-
-class TestRequireIsolatedDbParallel(TestRequireIsolatedDb):
+class TestRequireIsolatedDbParallel(unittest.TestCase):
     """
     we redo tests in :TestRequireIsolatedDb here making it parallel-compatible
     """
 
-    def setUp(self): pass
+    def setUp(self):
+        self.test_id = testing.tid(self)
+    
     def tearDown(self): pass
 
 
     def test_require_isolated_db1(self):
+        # set up
         #TODO create decorator to do the below block
-        _, engine, _ = testing.require_isolated_db(testing.tid(self))
-        PostgresSvc.create_db(db_name=testing.tid(self))
+        _, engine, _ = testing.require_isolated_db(self.test_id)
+        PostgresSvc.create_db(db_name=md5(self.test_id))
         PostgresSvc.create_all_postgres_tables(engine)
 
-        super().test_require_isolated_db1()
+        #region main test
+        u_all = User.find_all()
+        assert len(u_all) == 0
+        #endregion
 
-        PostgresSvc.drop_db(db_name=testing.tid(self)) #TODO can we have code to queue this to execute when test ends?
+        # tear down
+        PostgresSvc.drop_db(db_name=self.test_id) #TODO can we have code to queue this to execute when test ends?
+
 
     def test_require_isolated_db2(self):
+        # set up
         #TODO create decorator to do the below block
-        _, engine, _ = testing.require_isolated_db(testing.tid(self))
-        PostgresSvc.create_db(db_name=testing.tid(self))
+        _, engine, _ = testing.require_isolated_db(self.test_id)
+        PostgresSvc.create_db(db_name=md5(self.test_id))
         PostgresSvc.create_all_postgres_tables(engine)
 
-        super().test_require_isolated_db2()
+        #region main test
+        # create fixture
+        u1 = User.create(dict(email='some@e.mail1'))
+        u2 = User.create(dict(email='some@e.mail2'))
+        PostgresSvc.insert(u1)
+        PostgresSvc.insert(u2)
 
-        PostgresSvc.drop_db(db_name=testing.tid(self)) #TODO can we have code to queue this to execute when test ends?
+        # check rows count
+        u_all = User.find_all()
+        assert len(u_all) == 2
+        #endregion
+
+        # tear down
+        PostgresSvc.drop_db(db_name=md5(self.test_id)) #TODO can we have code to queue this to execute when test ends?

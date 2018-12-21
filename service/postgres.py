@@ -30,13 +30,16 @@ class PostgresSvc: # aka. Postgres Service
         global user, pswd, host, port, db
         global Session, engine, connection_string
 
+        Session2, engine2, connection_string2 = None,None,None
         if sys._called_from_test: # we're in testing, connection to be as test method's config if any
-            test_id                               = sys.require_isolated_db.get(get_current_process_thread_id())
-            Session2, engine2, connection_string2 = sys.test_sessions.get(test_id)
+            test_id      = sys.require_isolated_db.get(get_current_process_thread_id())
+            session_data = sys.test_sessions.get(test_id)
+            if session_data:
+                Session2, engine2, connection_string2 = session_data
+                print(f'Loaded isolated session for test_id={test_id}')
 
         if Session2: session = Session2(expire_on_commit=False) # load :Session2 as test's :require_isolated_db session
         else:        session = Session(expire_on_commit=False)  # load :Session as common :test db
-
         try:
             yield session
             session.commit()

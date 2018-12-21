@@ -1,5 +1,4 @@
 from sqlalchemy.ext.declarative import declarative_base
-from service.postgres import PostgresSvc
 
 
 class BaseModel(object):
@@ -37,6 +36,7 @@ class BaseModel(object):
 
     @classmethod
     def find_all(cls):
+        from service.postgres import PostgresSvc # import locally here to dodge circular reference
         with PostgresSvc.get_session() as session:
             rows = session.query(cls).all()
             return rows

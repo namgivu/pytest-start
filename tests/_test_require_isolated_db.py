@@ -1,20 +1,22 @@
 import unittest
 
-from service import testing
 from service.postgres import PostgresSvc
 from model.user       import User
 
+"""
+CAUTION
+This test class works only when running it NON-PARALLEL
+pytest -x  # WITH NO -n option here
+
+The filename has prefix _ to hide from pytest run
+We keep this file as a proof to show parallel-not-compatible test
+"""
 
 def setUpModule():    pass # nothing here for now
 def tearDownModule(): pass # nothing here for now
 
 
 class TestRequireIsolatedDb(unittest.TestCase):
-    """
-    CAUTION
-    This test class works only when running it NON-PARALLEL
-    pytest -x  # no -n option here
-    """
 
     def setUp(self):
         PostgresSvc.create_db(db_name='test')

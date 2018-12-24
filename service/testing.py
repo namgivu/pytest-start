@@ -21,10 +21,11 @@ def require_isolated_db(test_id):
     """
 
     # register :test_id
-    sys.require_isolated_db[get_current_process_thread_id()] = test_id
+    process_id = get_current_process_thread_id()
+    sys.require_isolated_db[process_id] = test_id
 
     # create session for :test_id
-    db                                 = md5(test_id) # we hash to make a short db name since postgres has limited db name length
+    db                                 = md5(f'{process_id}-{test_id}') # we hash to make a short db name since postgres has limited db name length
     Session, engine, connection_string = PostgresSvc.make_session(user, pswd, host, port, db)
     sys.test_sessions[test_id]         = Session, engine, connection_string
 
@@ -37,7 +38,7 @@ def isolate_db(wrapped_f): # wrapped_f aka. wrapped function # creating python d
         self         = args[0]
         test_id      = tid(self)
         _, engine, _ = require_isolated_db(test_id)
-        db_name      = md5(test_id) # we hash to make a short db name since postgres has limited db name length
+        db_name      = engine.url.database
 
         PostgresSvc.create_db(db_name)
         PostgresSvc.create_all_postgres_tables(engine)

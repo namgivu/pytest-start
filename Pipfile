@@ -11,7 +11,8 @@ pytest = "*"
 sqlalchemy = "*"
 psycopg2 = "==2.7.3.1"   # required fix version by normal python code in Ubuntu 16.04 w/ python 3.6.x
 
-pytest-xdist = "*"
+pytest-xdist = "*"  # run test in parallel manner ref. https://stackoverflow.com/questions/45733763/pytest-run-tests-parallel
+pytest-dotenv = "*"  # autoload for .env for pytest ref. https://github.com/quiqua/pytest-dotenv
 
 [requires]
 python_version = "3.6"

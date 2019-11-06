@@ -7,6 +7,10 @@ cd :THIS
     # install dependencies
     pipenv sync
 
+    # app config
+    cp .env-sample .env
+    please_do='edit .env file to fill in your setting' 
+
     # run test 
     pipenv run  pytest                                            # run all
     pipenv run  pytest -x                                         # stop after 1st failed test

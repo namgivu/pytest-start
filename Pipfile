@@ -9,7 +9,7 @@ verify_ssl = true
 pytest = "*"
 
 sqlalchemy = "*"
-psycopg2 = "*"
+psycopg2 = "==2.7.3.1"   # required fix version by normal python code in Ubuntu 16.04 w/ python 3.6.x
 
 pytest-xdist = "*"
 

@@ -1,11 +1,11 @@
 # mock method with patch()
 ref. https://docs.python.org/3/library/unittest.mock.html#patch-methods-start-and-stop
 
-basic
-```
+## basic patch()
+```python
 from package import module
-patcher  = patch('package.module.ClassName')
 
+patcher = patch('package.module.ClassName')
 original = module.ClassName
 
 new_mock = patcher.start()
@@ -17,8 +17,8 @@ assert module.ClassName is original
 assert module.ClassName is not new_mock
 ```
 
-within a test class
-```
+## within a test class
+```python
 class MyTest(TestCase):
 
     def setUp(self):
@@ -38,8 +38,8 @@ class MyTest(TestCase):
 MyTest('test_something').run()
 ```
 
-or even cleaner w/ .addCleanup() ie. 1st we don't wait until tearDown() and 2nd we patcher-stop all 
-```
+## or even cleaner w/ .addCleanup() ie. we don't wait until tearDown() to call patcher.stop() but register it right away when start mocking 
+```python
 class MyTest(TestCase):
 
     def setUp(self):
@@ -51,14 +51,16 @@ class MyTest(TestCase):
         assert package.module.Class is self.MockClass
 ```
 
+
 #TODO util :sentinel
 ref. https://docs.python.org/3/library/unittest.mock.html#sentinel
+
 
 # @patch() decorator
 https://docs.python.org/3/library/unittest.mock-examples.html#patch-decorators
 
 mock object
-```
+```python
 original = SomeClass.attribute
 
 @patch.object(SomeClass, 'attribute', sentinel.attribute)
@@ -70,7 +72,7 @@ assert SomeClass.attribute == original # outside of test(), it's normal as :orin
 ```
 
 mock variable of a module aka. module attribute
-```
+```python
 @patch('package.module.attribute', sentinel.attribute)
 def test():
     from package.module import attribute
@@ -80,7 +82,7 @@ test()
 ```
 
 # mock chain calls
-ref. 
+ref. TODO
 
 the context
 ```
@@ -94,6 +96,7 @@ class Something:
 something = Something()
 something.method()
 ```
+
 and we want to mock the :backend so that .method() call will result as :mock_response
 we can get there as mock setup as below
 ```
@@ -108,3 +111,8 @@ mock_backend \
 something.backend = mock_backend
 assert something.method() == mock_response
 ```
+
+
+# more on mocking by namgivu
+ref. https://github.com/namgivu/python-mock-start
+ref. https://github.com/namgivu/mocking-FlaskSqlAlchemy

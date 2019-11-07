@@ -6,7 +6,7 @@ def setUpModule():    pass   # nothing here for now
 def tearDownModule(): pass   # nothing here for now
 
 
-class Test(unittest.TestCase):
+class TestLoadEnv(unittest.TestCase):
 
     def setUp(self):    pass   # nothing here for now
     def tearDown(self): pass   # nothing here for now
@@ -14,4 +14,4 @@ class Test(unittest.TestCase):
 
     def test(self):
         DB_HOST = os.environ.get('DB_HOST')
-        assert DB_HOST
+        assert DB_HOST == "foobarbaz"

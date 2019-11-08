@@ -12,12 +12,13 @@ cd :THIS
     please_do='edit .env file to fill in your setting' 
 
     # run test 
-    pipenv run  pytest -k tests/path/to/your_test.py:test_method  # run a specific test method
-    pipenv run  pytest -s tests/path/to/your_test.py              # run tests in a file
-    pipenv run  pytest -x                                         # stop after 1st failed test
-    pipenv run  pytest                                            # run all
+    pipenv run  pytest tests/path/to/your_test.py -k 'test_method'  # run a specific test method
+    pipenv run  pytest tests/path/to/your_test.py                   # run tests in a file
+    pipenv run  pytest -x                                           # stop after 1st failed test
+    pipenv run  pytest                                              # run all
 
-    #TODO How to get PyCharm test run working with pytest-dotenv? ref. https://github.com/quiqua/pytest-dotenv/issues/10
+    # can also get PyCharm test run working with pytest-dotenv 
+    ref='https://github.com/quiqua/pytest-dotenv/issues/10'
 ```
 
 # run test parallel

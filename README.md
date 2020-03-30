@@ -19,6 +19,7 @@ cd :THIS
 
     # can also get PyCharm test run working with pytest-dotenv 
     ref='https://github.com/quiqua/pytest-dotenv/issues/10'
+        lead_to_this_ref='https://github.com/namgivu/pytest-start/pull/1'
 ```
 
 # run test parallel
